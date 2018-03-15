@@ -1,0 +1,64 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="maximum-scale=1.0, minimum-scale=1.0, user-scalable=0, initial-scale=1.0, width=device-width"/>
+    <meta name="format-detection" content="telephone=no, email=no, date=no, address=no">
+    <title>WinA</title>
+    <link rel="stylesheet" type="text/css" href="css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="css/box.css"/>
+    <script type="text/javascript" src="script/public.js"></script>
+    <style>
+    	p{
+    		color:#999;
+    		padding:5px;
+    	}
+    
+    
+    
+    
+    </style>
+    <script type="text/javascript">
+	    
+		var uzmoduledemo = null;
+		apiready = function(){
+	    	uzmoduledemo = api.require('lockpattern');
+	    }
+		function openGestureLoginActivity(){
+		var resultCallback = function(ret, err){
+		        document.getElementById("activity_result").innerHTML = JSON.stringify(ret);
+			}
+	        uzmoduledemo.openGestureLoginActivity(resultCallback);
+		}
+	    function openCreateGestureActivity(){
+	    var resultCallback = function(ret, err){
+		        document.getElementById("activity_result").innerHTML = JSON.stringify(ret);
+			}
+	        uzmoduledemo.openCreateGestureActivity(resultCallback);
+	    }
+    
+    </script>
+</head>
+<body>
+<div id="wrap">
+    <div id="main">
+        <br>
+        <div class='itemtitle'>1、开启手势登录Activity</div>
+        <div class="clickbtn" tapmode="active" onclick="openGestureLoginActivity()">
+            openGestureLoginActivity
+        </div>
+        <br>
+        <div class='itemtitle'>2、开启重新创建手势Activity</div>
+        <div class="clickbtn" tapmode="active" onclick="openCreateGestureActivity()">
+            openCreateGestureActivity
+        </div>
+        <br>
+        <div style="font-size:0.8em;">acticity返回值:</div>
+        <div id="activity_result"
+             style="width:100%;word-wrap: break-word;word-break: normal;"></div>
+        <br><br>
+    </div>
+</div>
+</body>
+</html>

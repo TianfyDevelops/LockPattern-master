@@ -1,0 +1,8 @@
+{
+  "modules":[
+    {
+      "name":"lockpattern",
+      "class":"com.star.lockpattern.APIModuleDemo"
+    }
+  ]
+}
