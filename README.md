@@ -1,6 +1,40 @@
 # LockPattern
-
-## Description
+##本项目在原作者https://github.com/13971643458/LockPattern-master项目基础上修改而成，仅供apicloud学习交流.  .zip可直接作为自定义模块使用
+#1.目录
+##lockpattern(apicloud)
+####method
+#####openGestureLoginActivity     openCreateGestureActivity
+#2.模块概述
+####lockpattern模块封装了一个通过手势解锁的功能。
+#3.方法接口描述
+##openGestureLoginActivity
+###打开手势登录界面
+###openGestureLoginActivity(callback(ret,err))
+##openCreateGestureActivity
+###打开创建(重置)手势界面
+###openCreateGestureActivity(callback(ret,err))
+##返回值说明
+###{"result:":"CUSTOM"}打开自定义界面
+###{"result:":"GOTOMAIN"}打开主页面
+###{"result:":"GOTOLOGIN"}打开登录界面(点击了忘记密码)
+#4.实例代码
+		var uzmoduledemo = null;
+		apiready = function(){
+	    	uzmoduledemo = api.require('lockpattern');
+	    }
+		function openGestureLoginActivity(){
+		var resultCallback = function(ret, err){
+		        document.getElementById("activity_result").innerHTML = JSON.stringify(ret);
+			}
+	        uzmoduledemo.openGestureLoginActivity(resultCallback);
+		}
+	    function openCreateGestureActivity(){
+	    var resultCallback = function(ret, err){
+		        document.getElementById("activity_result").innerHTML = JSON.stringify(ret);
+			}
+	        uzmoduledemo.openCreateGestureActivity(resultCallback);
+	    }
+## Description（java）
 
 Imitate Alipay gesture password
 
@@ -88,27 +122,4 @@ public void setInStealthMode(boolean inStealthMode) {
 }
 ```
 
-## Example
 
-![test.gif](https://github.com/sym900728/LockPattern/blob/master/images/test.gif)
-
-## Contact
-
-如果你有什么问题, 或者什么建议, 可以发邮件给我.  
-Email address: symwork@163.com
-
-## LICENSE
-
-    Copyright 2016 Shaoyaming
-
-    Licensed under the Apache License, Version 2.0 (the "License");
-    you may not use this file except in compliance with the License.
-    You may obtain a copy of the License at
-
-        http://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing, software
-    distributed under the License is distributed on an "AS IS" BASIS,
-    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-    See the License for the specific language governing permissions and
-    limitations under the License.
