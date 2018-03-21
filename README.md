@@ -1,54 +1,87 @@
 # LockPattern
+
 本项目在原作者https://github.com/13971643458/LockPattern-master项目基础上修改而成，仅供apicloud学习交流.  .zip可直接作为自定义模块使用
+
 #1.目录
+
 ##lockpattern(apicloud)
 
-###method
+## method
 
 openGestureLoginActivity     openCreateGestureActivity
+
 #2.模块概述
 
-####lockpattern模块封装了一个通过手势解锁的功能。
+lockpattern模块封装了一个通过手势解锁的功能。
+
 #3.方法接口描述
 
-##openGestureLoginActivity
+## openGestureLoginActivity
 
-###打开手势登录界面
+## 打开手势登录界面(用于第一次登陆)
 
-###openGestureLoginActivity(callback(ret,err))
+openGestureLoginActivity(callback(ret,err))
 
-##openCreateGestureActivity
+## 打开重置手势界面(用于用户修改用户名密码之后调用...)
 
-###打开创建(重置)手势界面
+openCreateGestureActivity(callback(ret,err))
 
-###openCreateGestureActivity(callback(ret,err))
+## 打开修改手势界面(用于进入应用修改手势)
+
+openResetGestureActivity(callback(ret,err))
+
+## 打开验证手势界面(用于有手势密码的情况下传递进来checkpassword,直接开启手势解锁界面)
+
+var param={checkpassword:"1234"};
+
+openCheckPwdGestureActivity(param,callback(ret,err))
 
 ##返回值说明
 
-###{"result:":"CUSTOM"}打开自定义界面
+{"result:":"CUSTOM"}打开自定义界面
 
-###{"result:":"GOTOMAIN"}打开主页面
+{"result:":"GOTOMAIN"}打开主页面
 
-###{"result:":"GOTOLOGIN"}打开登录界面(点击了忘记密码)
+{"result:":"GOTOLOGIN"}打开登录界面(点击了忘记密码)  
 
 #4.实例代码
-
+```
+		
 		var uzmoduledemo = null;
 		apiready = function(){
 	    	uzmoduledemo = api.require('lockpattern');
 	    }
+	    
 		function openGestureLoginActivity(){
 		var resultCallback = function(ret, err){
 		        document.getElementById("activity_result").innerHTML = JSON.stringify(ret);
 			}
 	        uzmoduledemo.openGestureLoginActivity(resultCallback);
 		}
+		
 	    function openCreateGestureActivity(){
 	    var resultCallback = function(ret, err){
 		        document.getElementById("activity_result").innerHTML = JSON.stringify(ret);
 			}
 	        uzmoduledemo.openCreateGestureActivity(resultCallback);
 	    }
+	    
+	    function openResetGestureActivity(){
+		var resultCallback = function(ret, err){
+		        document.getElementById("activity_result").innerHTML = JSON.stringify(ret);
+			}
+	        uzmoduledemo.openResetGestureActivity(resultCallback);
+		}
+		
+	    function openCheckPwdGestureActivity(){
+		var resultCallback = function(ret, err){
+		        document.getElementById("activity_result").innerHTML = JSON.stringify(ret);
+			}
+			var param={checkpassword:"1234"};
+	        uzmoduledemo.openCheckPwdGestureActivity(param,resultCallback);
+		}
+
+```
 
 ## Description（java）
 
