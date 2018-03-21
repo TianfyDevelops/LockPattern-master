@@ -14,10 +14,6 @@
     		color:#999;
     		padding:5px;
     	}
-    
-    
-    
-    
     </style>
     <script type="text/javascript">
 	    
@@ -25,35 +21,58 @@
 		apiready = function(){
 	    	uzmoduledemo = api.require('lockpattern');
 	    }
+	    
 		function openGestureLoginActivity(){
 		var resultCallback = function(ret, err){
 		        document.getElementById("activity_result").innerHTML = JSON.stringify(ret);
 			}
 	        uzmoduledemo.openGestureLoginActivity(resultCallback);
 		}
+		
 	    function openCreateGestureActivity(){
 	    var resultCallback = function(ret, err){
 		        document.getElementById("activity_result").innerHTML = JSON.stringify(ret);
 			}
 	        uzmoduledemo.openCreateGestureActivity(resultCallback);
 	    }
-    
+	    
+	    function openResetGestureActivity(){
+		var resultCallback = function(ret, err){
+		        document.getElementById("activity_result").innerHTML = JSON.stringify(ret);
+			}
+	        uzmoduledemo.openResetGestureActivity(resultCallback);
+		}
+		
+	    function openCheckPwdGestureActivity(){
+		var resultCallback = function(ret, err){
+		        document.getElementById("activity_result").innerHTML = JSON.stringify(ret);
+			}
+			var param={checkpassword:"1234"};
+	        uzmoduledemo.openCheckPwdGestureActivity(param,resultCallback);
+		}
+		
     </script>
 </head>
 <body>
 <div id="wrap">
     <div id="main">
         <br>
-        <div class='itemtitle'>1、开启手势登录Activity</div>
+        <div class='itemtitle'>1、打开手势登录界面(用于第一次登陆)</div>
         <div class="clickbtn" tapmode="active" onclick="openGestureLoginActivity()">
             openGestureLoginActivity
         </div>
-        <br>
-        <div class='itemtitle'>2、开启重新创建手势Activity</div>
+        <div class='itemtitle'>2、打开重置手势界面(用于用户修改用户名密码之后调用)</div>
         <div class="clickbtn" tapmode="active" onclick="openCreateGestureActivity()">
             openCreateGestureActivity
         </div>
-        <br>
+        <div class='itemtitle'>3、打开修改手势界面(用于进入应用修改手势)</div>
+        <div class="clickbtn" tapmode="active" onclick="openResetGestureActivity()">
+            openResetGestureActivity
+        </div>
+        <div class='itemtitle'>4、打开验证手势界面(用于有手势密码的情况下传递进来checkpassword,直接开启手势解锁界面)</div>
+        <div class="clickbtn" tapmode="active" onclick="openCheckPwdGestureActivity()">
+            openCheckPwdGestureActivity
+        </div>
         <div style="font-size:0.8em;">acticity返回值:</div>
         <div id="activity_result"
              style="width:100%;word-wrap: break-word;word-break: normal;"></div>

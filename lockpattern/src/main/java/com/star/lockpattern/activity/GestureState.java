@@ -17,6 +17,8 @@ public class GestureState {
     public static final int GESTURELOGIN_RESULT_GOTOMAIN = 101;
     public static final int GESTURELOGIN_RESULT_GOTOLOGIN = 102;
     public static final int GESTURELOGIN_RESULT_GOTOCUSTOM = 102;
+    public static final int GESTURELOGIN_REQUEST_CODE_GOTOCERATE = 103;
+
 
 
 

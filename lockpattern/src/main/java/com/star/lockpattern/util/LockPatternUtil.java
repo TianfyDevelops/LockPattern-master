@@ -1,6 +1,7 @@
 package com.star.lockpattern.util;
 
 import android.content.Context;
+import android.text.TextUtils;
 
 import com.star.lockpattern.widget.LockPatternView;
 
@@ -8,6 +9,8 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.Future;
+import java.util.concurrent.locks.Lock;
 
 /**
  * Created by Sym on 2016/1/16.
@@ -151,6 +154,23 @@ public class LockPatternUtil {
         } else {
             byte[] bytes2 = patternToHash(pattern);
             return Arrays.equals(bytes, bytes2);
+        }
+    }
+    
+    public static boolean checkPassword(List<LockPatternView.Cell> pattern,String password){
+        if (pattern==null|| TextUtils.isEmpty(password)){
+            return false;
+        }else{
+            StringBuilder builder=new StringBuilder();
+            for (int j = 0; j < pattern.size(); j++) {
+                LockPatternView.Cell cell = pattern.get(j);
+                builder.append(cell.getNum(cell.getRow(),cell.getColumn()));
+            }
+            if (builder.toString().equals(password)){
+                return true;
+            }else{
+                return false;
+            }
         }
     }
 }

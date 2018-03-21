@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.star.lockpattern.R;
 import com.star.lockpattern.util.LockPatternUtil;
@@ -14,7 +15,6 @@ import com.star.lockpattern.util.constant.Constant;
 import com.star.lockpattern.widget.LockPatternView;
 
 import java.util.List;
-
 
 
 /**
@@ -36,6 +36,7 @@ public class GestureLoginActivity extends Activity {
     private static final long DELAYTIME = 600l;
     private byte[] gesturePassword;
     private Intent mIntent;
+    private int i = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +47,7 @@ public class GestureLoginActivity extends Activity {
         assignViews();
         this.init();
     }
+
     private TextView messageTv;
     private LockPatternView lockPatternView;
     private Button forgetGestureBtn;
@@ -68,16 +70,29 @@ public class GestureLoginActivity extends Activity {
 
         @Override
         public void onPatternStart() {
+            i++;
             lockPatternView.removePostClearPatternRunnable();
         }
 
         @Override
         public void onPatternComplete(List<LockPatternView.Cell> pattern) {
-            if(pattern != null){
-                if(LockPatternUtil.checkPattern(pattern, gesturePassword)) {
+            if (pattern != null) {//手势不为空 判断手势是否正确
+                if (LockPatternUtil.checkPattern(pattern, gesturePassword)) {//正确
                     updateStatus(Status.CORRECT);
-                } else {
-                    updateStatus(Status.ERROR);
+                } else {//错误
+                    if (i < 3) {//错误小于3次
+                        if (i == 1) {
+                            updateStatus(Status.ERRORTWO);
+                        } else {
+                            updateStatus(Status.ERRORONE);
+                        }
+//                        updateStatus(Status.ERROR);
+                    } else {//大于3次 跳转到登录界面
+                        i = 0;
+                        mIntent.putExtra("result", "GOTOLOGIN");
+                        GestureLoginActivity.this.setResult(GestureState.GESTURELOGIN_RESULT_GOTOLOGIN, mIntent);
+                        GestureLoginActivity.this.finish();
+                    }
                 }
             }
         }
@@ -85,6 +100,7 @@ public class GestureLoginActivity extends Activity {
 
     /**
      * 更新状态
+     *
      * @param status
      */
     private void updateStatus(Status status) {
@@ -95,6 +111,14 @@ public class GestureLoginActivity extends Activity {
                 lockPatternView.setPattern(LockPatternView.DisplayMode.DEFAULT);
                 break;
             case ERROR:
+                lockPatternView.setPattern(LockPatternView.DisplayMode.ERROR);
+                lockPatternView.postClearPatternRunnable(DELAYTIME);
+                break;
+            case ERRORONE://新增
+                lockPatternView.setPattern(LockPatternView.DisplayMode.ERROR);
+                lockPatternView.postClearPatternRunnable(DELAYTIME);
+                break;
+            case ERRORTWO://新增
                 lockPatternView.setPattern(LockPatternView.DisplayMode.ERROR);
                 lockPatternView.postClearPatternRunnable(DELAYTIME);
                 break;
@@ -112,8 +136,8 @@ public class GestureLoginActivity extends Activity {
 //        Toast.makeText(GestureLoginActivity.this, "success", Toast.LENGTH_SHORT).show();
 //        Intent intent = new Intent(GestureLoginActivity.this, MainActivity.class);
 //        startActivity(intent);
-        mIntent.putExtra("result","GOTOMAIN");
-        setResult(GestureState.GESTURELOGIN_RESULT_GOTOMAIN,mIntent);
+        mIntent.putExtra("result", "GOTOMAIN");
+        setResult(GestureState.GESTURELOGIN_RESULT_GOTOMAIN, mIntent);
         this.finish();
     }
 
@@ -124,8 +148,8 @@ public class GestureLoginActivity extends Activity {
     public void forgetGesturePasswrod(View view) {
 //        Intent intent = new Intent(GestureLoginActivity.this, CreateGestureActivity.class);
 //        startActivity(intent);
-        mIntent.putExtra("result","GOTOLOGIN");
-        setResult(GestureState.GESTURELOGIN_RESULT_GOTOLOGIN,mIntent);
+        mIntent.putExtra("result", "GOTOLOGIN");
+        setResult(GestureState.GESTURELOGIN_RESULT_GOTOLOGIN, mIntent);
         this.finish();
     }
 
@@ -134,6 +158,10 @@ public class GestureLoginActivity extends Activity {
         DEFAULT(R.string.gesture_default, R.color.grey_a5a5a5),
         //密码输入错误
         ERROR(R.string.gesture_error, R.color.red_f4333c),
+        //密码错误剩余验证次数1次
+        ERRORONE(R.string.gesture_error_one, R.color.red_f4333c),
+        //密码错误剩余验证次数2次
+        ERRORTWO(R.string.gesture_error_two, R.color.red_f4333c),
         //密码输入正确
         CORRECT(R.string.gesture_correct, R.color.grey_a5a5a5);
 
@@ -141,6 +169,7 @@ public class GestureLoginActivity extends Activity {
             this.strId = strId;
             this.colorId = colorId;
         }
+
         private int strId;
         private int colorId;
     }

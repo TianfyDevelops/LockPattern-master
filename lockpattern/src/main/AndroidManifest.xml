@@ -15,6 +15,14 @@
             android:name="com.star.lockpattern.activity.GestureLoginActivity"
             android:configChanges="orientation|locale"
             android:screenOrientation="portrait"/>
+        <activity
+            android:name="com.star.lockpattern.activity.ResetGestureActivity"
+            android:configChanges="orientation|locale"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name="com.star.lockpattern.activity.GestureCheckLoginActivity"
+            android:configChanges="orientation|locale"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>
