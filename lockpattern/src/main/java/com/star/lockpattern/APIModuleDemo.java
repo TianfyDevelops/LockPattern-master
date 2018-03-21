@@ -55,7 +55,7 @@ public class APIModuleDemo extends UZModule {
             startActivityForResult(intent, GestureState.GESTURELOGIN_REQUEST_CODE);
         }
     }
-    //打开重置手势界面(用于用户修改用户名密码之后调用)
+    //打开重置手势界面(用于用户修改用户名密码之后调用...)
     public void jsmethod_openCreateGestureActivity(final UZModuleContext moduleContext){
         this.mUZModuleContext = moduleContext;
         Intent intent = new Intent(getContext(), CreateGestureActivity.class);
