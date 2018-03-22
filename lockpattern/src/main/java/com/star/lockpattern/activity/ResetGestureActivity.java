@@ -80,7 +80,8 @@ public class ResetGestureActivity extends Activity {
                 if (i < 1) {
                     if (LockPatternUtil.checkPattern(pattern, gesturePassword)) {//正确
                         i++;
-                        updateStatus(Status.CORRECT, pattern);
+                        resetBtn.setVisibility(View.VISIBLE);
+                        updateStatus(Status.DEFAULT, pattern);
                     } else {//错误
                         i = 0;
                         updateStatus(Status.ERROR, pattern);
